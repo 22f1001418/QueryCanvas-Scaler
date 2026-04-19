@@ -1,0 +1,21 @@
+services:
+  # Static site: serves the Vite build directly from Render's CDN.
+  # This is the correct deployment model for a client-side SPA — no
+  # Node process runs in production. SPA deep-link fallback is handled
+  # by `public/_redirects` (copied into `dist/` by Vite at build time).
+  - type: web
+    name: querycanvas
+    runtime: static
+    buildCommand: npm install && npm run build
+    staticPublishPath: ./dist
+    pullRequestPreviewsEnabled: false
+    routes:
+      # Belt-and-braces fallback in addition to public/_redirects, so
+      # that any path not matching a real file in dist/ is rewritten to
+      # index.html and React Router takes over on the client.
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      - key: NODE_VERSION
+        value: "22"

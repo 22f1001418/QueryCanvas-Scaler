@@ -1,0 +1,10 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+# SPA fallback: every deep link is rewritten to index.html so React
+# Router can match the path on the client.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
