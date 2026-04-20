@@ -1,5 +1,8 @@
 export type PageId =
-  | 'select' | 'where' | 'orderby'
+  | 'select' | 'where' | 'orderby' | 'limitoffset' | 'alias' | 'distinct' | 'initcap' | 'groupconcat'
+  | 'nullhandling' | 'countvariants'
+  | 'wherehaving'
+  | 'iffunction' | 'advancedcase'
   | 'groupby' | 'joins' | 'subqueries'
   | 'window' | 'case' | 'cte'
   | 'aggregations' | 'sets'

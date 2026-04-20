@@ -5,6 +5,16 @@ import { LandingPage } from './pages/LandingPage';
 import { SelectPage } from './pages/SelectPage';
 import { WherePage } from './pages/WherePage';
 import { OrderByPage } from './pages/OrderByPage';
+import { LimitOffsetPage } from './pages/LimitOffsetPage';
+import { AliasPage } from './pages/AliasPage';
+import { DistinctPage } from './pages/DistinctPage';
+import { InitcapPage } from './pages/InitcapPage';
+import { GroupConcatPage } from './pages/GroupConcatPage';
+import { NullHandlingPage } from './pages/NullHandlingPage';
+import { CountVariantsPage } from './pages/CountVariantsPage';
+import { WhereVsHavingPage } from './pages/WhereVsHavingPage';
+import { IFunctionPage } from './pages/IFunctionPage';
+import { AdvancedCaseAggPage } from './pages/AdvancedCaseAggPage';
 import { AggregationsPage } from './pages/AggregationsPage';
 import { GroupByPage } from './pages/GroupByPage';
 import { JoinsPage } from './pages/JoinsPage';
@@ -59,6 +69,16 @@ const topicRoutes: { path: string; Component: React.ComponentType }[] = [
   { path: ROUTES.select, Component: SelectPage },
   { path: ROUTES.where, Component: WherePage },
   { path: ROUTES.orderby, Component: OrderByPage },
+  { path: ROUTES.limitoffset, Component: LimitOffsetPage },
+  { path: ROUTES.alias, Component: AliasPage },
+  { path: ROUTES.distinct, Component: DistinctPage },
+  { path: ROUTES.initcap, Component: InitcapPage },
+  { path: ROUTES.groupconcat, Component: GroupConcatPage },
+  { path: ROUTES.nullhandling, Component: NullHandlingPage },
+  { path: ROUTES.countvariants, Component: CountVariantsPage },
+  { path: ROUTES.wherehaving, Component: WhereVsHavingPage },
+  { path: ROUTES.iffunction, Component: IFunctionPage },
+  { path: ROUTES.advancedcase, Component: AdvancedCaseAggPage },
   { path: ROUTES.aggregations, Component: AggregationsPage },
   { path: ROUTES.groupby, Component: GroupByPage },
   { path: ROUTES.joins, Component: JoinsPage },
