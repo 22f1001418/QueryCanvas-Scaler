@@ -41,8 +41,8 @@ const steps = [
     desc: '❌ Common mistake — WHERE on an aggregate',
     detail: 'WHERE is evaluated before aggregation, so aggregate functions like AVG() don\'t exist yet at that stage. This query throws an error. To filter on aggregate results, you must use HAVING.',
     phase: 'error' as const,
-    keptRows: [],
-    removedRows: [],
+    keptRows: [] as number[],
+    removedRows: [] as number[],
     result: {
       columns: ['error'],
       rows: [['misuse of aggregate function AVG()']],
