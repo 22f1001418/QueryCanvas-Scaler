@@ -30,7 +30,7 @@ const steps = [
     detail: 'HAVING runs after GROUP BY. All 8 rows are grouped first, producing 4 department groups. HAVING then removes groups where the member count is not > 1. HR (count=1) is filtered out; the other three departments survive.',
     phase: 'having' as const,
     keptRows: [0, 1, 2, 3, 4, 5, 6, 7], // all rows included in grouping
-    removedRows: [],
+    removedRows: [] as number[],
     result: {
       columns: ['department', 'cnt'],
       rows: [['Engineering', 3], ['Marketing', 2], ['Sales', 2]],
@@ -54,7 +54,7 @@ const steps = [
     detail: 'HAVING runs after aggregation, so AVG(salary) is available. Departments with average salary ≤ 75,000 (Marketing 70k, Sales 71.5k, HR 71k) are removed. Only Engineering (95k average) survives.',
     phase: 'having' as const,
     keptRows: [0, 1, 2, 3, 4, 5, 6, 7],
-    removedRows: [],
+    removedRows: [] as number[],
     result: {
       columns: ['department', 'avg_sal'],
       rows: [['Engineering', 95000]],
