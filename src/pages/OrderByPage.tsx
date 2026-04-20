@@ -4,43 +4,43 @@ import { SqlTable, CellStyle } from '../components/SqlTable';
 import { CodeBlock } from '../components/CodeBlock';
 import { AnimationControls } from '../components/AnimationControls';
 import { useAnimation } from '../hooks/useAnimation';
-import { employees } from '../data/sampleData';
+import { rides } from '../data/sampleData';
 import { QueryPlayground } from '../components/QueryPlayground';
 import { motion } from 'framer-motion';
 
 const sortSteps = [
   {
-    sql: `SELECT name, salary\nFROM employees\nORDER BY salary ASC;`,
-    desc: 'Sort by salary ascending',
-    detail: 'ASC (ascending) arranges values from smallest to largest. The lowest salary (65,000) appears first, highest (102,000) last.',
-    sortFn: (a: (string|number|null)[], b: (string|number|null)[]) => (a[3] as number) - (b[3] as number),
-    highlightCol: 3,
+    sql: `SELECT start_location, distance_km\nFROM rides\nORDER BY distance_km ASC;`,
+    desc: 'Sort by distance ascending',
+    detail: 'ASC (ascending) arranges values from smallest to largest. The shortest ride (6.8 km) appears first, the longest (18.4 km) last.',
+    sortFn: (a: (string|number|null)[], b: (string|number|null)[]) => (a[6] as number) - (b[6] as number),
+    highlightCol: 6,
   },
   {
-    sql: `SELECT name, salary\nFROM employees\nORDER BY salary DESC;`,
-    desc: 'Sort by salary descending',
-    detail: 'DESC (descending) arranges values from largest to smallest. The highest salary (102,000) appears first, lowest (65,000) last.',
-    sortFn: (a: (string|number|null)[], b: (string|number|null)[]) => (b[3] as number) - (a[3] as number),
-    highlightCol: 3,
+    sql: `SELECT start_location, distance_km\nFROM rides\nORDER BY distance_km DESC;`,
+    desc: 'Sort by distance descending',
+    detail: 'DESC (descending) arranges values from largest to smallest. The longest ride (18.4 km) appears first, the shortest (6.8 km) last.',
+    sortFn: (a: (string|number|null)[], b: (string|number|null)[]) => (b[6] as number) - (a[6] as number),
+    highlightCol: 6,
   },
   {
-    sql: `SELECT name, department, salary\nFROM employees\nORDER BY department ASC,\n         salary DESC;`,
+    sql: `SELECT vehicle_type, distance_km\nFROM rides\nORDER BY vehicle_type ASC,\n         distance_km DESC;`,
     desc: 'Multi-column sort',
-    detail: 'Multiple ORDER BY columns create a hierarchy. First sort by department A-Z, then within each department sort by salary highest to lowest.',
+    detail: 'Multiple ORDER BY columns create a hierarchy. First sort by vehicle type A-Z, then within each type sort by distance highest to lowest.',
     sortFn: (a: (string|number|null)[], b: (string|number|null)[]) => {
-      const deptCmp = (a[2] as string).localeCompare(b[2] as string);
-      if (deptCmp !== 0) return deptCmp;
-      return (b[3] as number) - (a[3] as number);
+      const vtCmp = (a[7] as string).localeCompare(b[7] as string);
+      if (vtCmp !== 0) return vtCmp;
+      return (b[6] as number) - (a[6] as number);
     },
-    highlightCol: 2,
+    highlightCol: 7,
   },
   {
-    sql: `SELECT name, hire_date\nFROM employees\nORDER BY hire_date ASC;`,
-    desc: 'Sort by date ascending',
-    detail: 'ORDER BY works with dates too. Dates are sorted chronologically — earliest hire (2018-07) comes first, latest hire (2023-02) comes last.',
+    sql: `SELECT start_location, start_time\nFROM rides\nORDER BY start_time ASC;`,
+    desc: 'Sort by timestamp ascending',
+    detail: 'ORDER BY works with timestamps too. Rides are sorted chronologically — the earliest ride (2024-01-10 08:30) comes first, the latest (2024-01-16 09:00) last.',
     sortFn: (a: (string|number|null)[], b: (string|number|null)[]) =>
-      new Date(a[4] as string).getTime() - new Date(b[4] as string).getTime(),
-    highlightCol: 4,
+      new Date(a[2] as string).getTime() - new Date(b[2] as string).getTime(),
+    highlightCol: 2,
   },
 ];
 
@@ -49,14 +49,14 @@ export function OrderByPage() {
   const current = sortSteps[step];
 
   const sortedIndices = useMemo(() => {
-    const indexed = employees.rows.map((row, i) => ({ row, i }));
+    const indexed = rides.rows.map((row, i) => ({ row, i }));
     indexed.sort((a, b) => current.sortFn(a.row, b.row));
     return indexed.map((x) => x.i);
   }, [step]);
 
   const cellStyles = useMemo(() => {
     const styles: Record<string, CellStyle> = {};
-    employees.rows.forEach((_, ri) => {
+    rides.rows.forEach((_, ri) => {
       styles[`${ri}-${current.highlightCol}`] = 'selected';
     });
     return styles;
@@ -67,7 +67,7 @@ export function OrderByPage() {
       <div>
         <h1 className="text-xl font-semibold text-text-primary">ORDER BY</h1>
         <p className="text-sm text-text-secondary mt-1">
-          Sort result sets by one or more columns in ascending (A→Z, 0→9) or descending (Z→A, 9→0) order. ORDER BY is 
+          Sort result sets by one or more columns in ascending (A→Z, 0→9) or descending (Z→A, 9→0) order. ORDER BY is
           commonly used with numeric, text, and date columns. Combined with LIMIT, it lets you find "top 10" or "bottom 5" results.
         </p>
       </div>
@@ -89,9 +89,9 @@ export function OrderByPage() {
           <CodeBlock code={current.sql} highlightLines={[3, 4]} />
         </MacWindow>
 
-        <MacWindow title="employees — original order" compact>
+        <MacWindow title="rides — original order" compact>
           <div className="p-3">
-            <SqlTable table={employees} cellStyles={cellStyles} />
+            <SqlTable table={rides} cellStyles={cellStyles} />
           </div>
         </MacWindow>
       </div>
@@ -105,7 +105,7 @@ export function OrderByPage() {
               </span>
             </div>
             <SqlTable
-              table={employees}
+              table={rides}
               visibleRows={sortedIndices}
               highlightColumns={[current.highlightCol]}
               animateRows
@@ -117,8 +117,8 @@ export function OrderByPage() {
       {/* Query Playground */}
       <div className="mt-8 pt-6 border-t border-border">
         <QueryPlayground
-          initialQuery="SELECT name, salary FROM employees ORDER BY salary DESC;"
-          description="Write your own ORDER BY queries. Try sorting by different columns with ASC/DESC, combine multiple columns, or sort by dates!"
+          initialQuery="SELECT start_location, distance_km FROM rides ORDER BY distance_km DESC;"
+          description="Write your own ORDER BY queries. Try sorting by different columns with ASC/DESC, combine multiple columns, or sort by timestamps!"
         />
       </div>
     </div>

@@ -4,44 +4,44 @@ import { SqlTable, CellStyle } from '../components/SqlTable';
 import { CodeBlock } from '../components/CodeBlock';
 import { AnimationControls } from '../components/AnimationControls';
 import { useAnimation } from '../hooks/useAnimation';
-import { employees } from '../data/sampleData';
+import { rides } from '../data/sampleData';
 import { QueryPlayground } from '../components/QueryPlayground';
 import { motion } from 'framer-motion';
 
 const queries = [
   {
-    sql: `SELECT * FROM employees;`,
+    sql: `SELECT * FROM rides;`,
     desc: 'Select all columns',
-    detail: 'The asterisk (*) is a wildcard that means "all columns". This returns every column from the employee records.',
-    cols: [0, 1, 2, 3, 4, 5],
+    detail: 'The asterisk (*) is a wildcard that means "all columns". This returns every column from the rides table — ride_id, user_id, timestamps, locations, distance, vehicle type, and rating.',
+    cols: [0, 1, 2, 3, 4, 5, 6, 7, 8],
     rows: [0, 1, 2, 3, 4, 5, 6, 7],
   },
   {
-    sql: `SELECT name, salary\nFROM employees;`,
+    sql: `SELECT start_location, end_location\nFROM rides;`,
     desc: 'Select specific columns',
-    detail: 'List the exact columns you want. Only "name" and "salary" are returned, ignoring other columns like department and hire_date.',
-    cols: [1, 3],
+    detail: 'List the exact columns you want. Only "start_location" and "end_location" are returned, ignoring all other columns like distance_km and vehicle_type.',
+    cols: [4, 5],
     rows: [0, 1, 2, 3, 4, 5, 6, 7],
   },
   {
-    sql: `SELECT DISTINCT department\nFROM employees;`,
+    sql: `SELECT DISTINCT vehicle_type\nFROM rides;`,
     desc: 'Select distinct values',
-    detail: 'DISTINCT removes duplicate values. Since many employees share departments, 4 unique departments appear instead of 8 rows.',
-    cols: [2],
-    rows: [0, 2, 4, 7],
-  },
-  {
-    sql: `SELECT name, salary\nFROM employees\nLIMIT 3;`,
-    desc: 'Limit results',
-    detail: 'LIMIT restricts the number of rows returned. This query returns only the first 3 employees from the dataset.',
-    cols: [1, 3],
+    detail: 'DISTINCT removes duplicate values. Since many rides share vehicle types, only 3 unique types appear instead of 8 rows.',
+    cols: [7],
     rows: [0, 1, 2],
   },
   {
-    sql: `SELECT name, salary\nFROM employees\nLIMIT 3 OFFSET 2;`,
+    sql: `SELECT start_location, distance_km\nFROM rides\nLIMIT 3;`,
+    desc: 'Limit results',
+    detail: 'LIMIT restricts the number of rows returned. This query returns only the first 3 rides from the dataset.',
+    cols: [4, 6],
+    rows: [0, 1, 2],
+  },
+  {
+    sql: `SELECT start_location, distance_km\nFROM rides\nLIMIT 3 OFFSET 2;`,
     desc: 'Offset and limit',
     detail: 'OFFSET skips a number of rows before returning results. Combined with LIMIT, this implements pagination: skip 2 rows, then return 3.',
-    cols: [1, 3],
+    cols: [4, 6],
     rows: [2, 3, 4],
   },
 ];
@@ -74,8 +74,8 @@ export function SelectPage() {
       <div>
         <h1 className="text-xl font-semibold text-text-primary">SELECT Statement</h1>
         <p className="text-sm text-text-secondary mt-1">
-          The foundation of SQL — retrieve data from tables by specifying columns and rows. The SELECT statement is the most 
-          commonly used SQL command. It allows you to extract and view data from databases, choosing which columns to display 
+          The foundation of SQL — retrieve data from tables by specifying columns and rows. The SELECT statement is the most
+          commonly used SQL command. It allows you to extract and view data from databases, choosing which columns to display
           and which rows to include. Every SQL query begins with SELECT.
         </p>
       </div>
@@ -104,10 +104,10 @@ export function SelectPage() {
         </MacWindow>
 
         {/* Source Table */}
-        <MacWindow title="employees" compact>
+        <MacWindow title="rides" compact>
           <div className="p-3">
             <SqlTable
-              table={employees}
+              table={rides}
               cellStyles={cellStyles}
               animateRows
             />
@@ -133,10 +133,10 @@ export function SelectPage() {
                 step === 2
                   ? {
                       name: 'result',
-                      columns: ['department'],
-                      rows: [['Engineering'], ['Marketing'], ['Sales'], ['HR']],
+                      columns: ['vehicle_type'],
+                      rows: [['Bike'], ['Auto'], ['Cab']],
                     }
-                  : employees
+                  : rides
               }
               visibleColumns={step === 2 ? undefined : query.cols}
               visibleRows={step === 2 ? undefined : query.rows}
@@ -149,7 +149,7 @@ export function SelectPage() {
       {/* Query Playground */}
       <div className="mt-8 pt-6 border-t border-border">
         <QueryPlayground
-          initialQuery="SELECT * FROM employees;"
+          initialQuery="SELECT * FROM rides;"
           description="Write your own SELECT queries. Try different column combinations, use DISTINCT, LIMIT, OFFSET, and more!"
         />
       </div>

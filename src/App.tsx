@@ -15,6 +15,7 @@ import { CountVariantsPage } from './pages/CountVariantsPage';
 import { WhereVsHavingPage } from './pages/WhereVsHavingPage';
 import { IFunctionPage } from './pages/IFunctionPage';
 import { AdvancedCaseAggPage } from './pages/AdvancedCaseAggPage';
+import { InlineCalcPage } from './pages/InlineCalcPage';
 import { AggregationsPage } from './pages/AggregationsPage';
 import { GroupByPage } from './pages/GroupByPage';
 import { JoinsPage } from './pages/JoinsPage';
@@ -79,6 +80,7 @@ const topicRoutes: { path: string; Component: React.ComponentType }[] = [
   { path: ROUTES.wherehaving, Component: WhereVsHavingPage },
   { path: ROUTES.iffunction, Component: IFunctionPage },
   { path: ROUTES.advancedcase, Component: AdvancedCaseAggPage },
+  { path: ROUTES.inlinecalc, Component: InlineCalcPage },
   { path: ROUTES.aggregations, Component: AggregationsPage },
   { path: ROUTES.groupby, Component: GroupByPage },
   { path: ROUTES.joins, Component: JoinsPage },

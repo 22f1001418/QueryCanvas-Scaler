@@ -3,57 +3,55 @@ import { SqlTable } from '../components/SqlTable';
 import { CodeBlock } from '../components/CodeBlock';
 import { AnimationControls } from '../components/AnimationControls';
 import { useAnimation } from '../hooks/useAnimation';
-import { employees } from '../data/sampleData';
+import { rides } from '../data/sampleData';
 import { QueryPlayground } from '../components/QueryPlayground';
 import { motion } from 'framer-motion';
 
 const steps = [
   {
-    sql: `SELECT department\nFROM employees;`,
+    sql: `SELECT vehicle_type\nFROM rides;`,
     desc: 'Without DISTINCT — duplicates included',
-    detail: 'A plain SELECT returns every row, including duplicates. With 8 employees across 4 departments, "Engineering" appears 3 times and "Sales" appears twice.',
+    detail: 'A plain SELECT returns every row, including duplicates. With 8 rides across 3 vehicle types, "Bike" appears 3 times and "Auto" appears 3 times.',
     result: {
-      columns: ['department'],
+      columns: ['vehicle_type'],
       rows: [
-        ['Engineering'], ['Engineering'], ['Marketing'],
-        ['Marketing'], ['Sales'], ['Sales'],
-        ['Engineering'], ['HR'],
+        ['Bike'], ['Auto'], ['Cab'],
+        ['Bike'], ['Auto'], ['Cab'],
+        ['Auto'], ['Bike'],
       ],
     },
     badge: '8 rows',
   },
   {
-    sql: `SELECT DISTINCT department\nFROM employees;`,
+    sql: `SELECT DISTINCT vehicle_type\nFROM rides;`,
     desc: 'DISTINCT — unique values only',
-    detail: 'DISTINCT removes duplicate rows from the result. Each department appears exactly once, reducing 8 rows to 4. The order is not guaranteed without ORDER BY.',
+    detail: 'DISTINCT removes duplicate rows from the result. Each vehicle type appears exactly once, reducing 8 rows to 3. The order is not guaranteed without ORDER BY.',
     result: {
-      columns: ['department'],
-      rows: [['Engineering'], ['Marketing'], ['Sales'], ['HR']],
+      columns: ['vehicle_type'],
+      rows: [['Bike'], ['Auto'], ['Cab']],
     },
-    badge: '4 rows',
+    badge: '3 rows',
   },
   {
-    sql: `SELECT DISTINCT department,\n       manager_id IS NULL AS is_lead\nFROM employees;`,
+    sql: `SELECT DISTINCT vehicle_type,\n       user_id\nFROM rides;`,
     desc: 'DISTINCT on multiple columns',
-    detail: 'DISTINCT applies to the entire row — all selected columns together. Here we get unique (department, is_lead) combinations. A department can appear twice if it has both leads and non-leads.',
+    detail: 'DISTINCT applies to the entire row — all selected columns together. Here we get unique (vehicle_type, user_id) combinations. A vehicle type appears multiple times if different users booked it.',
     result: {
-      columns: ['department', 'is_lead'],
+      columns: ['vehicle_type', 'user_id'],
       rows: [
-        ['Engineering', 1], ['Engineering', 0],
-        ['Marketing', 1], ['Marketing', 0],
-        ['Sales', 1], ['Sales', 0],
-        ['HR', 1],
+        ['Bike', 1], ['Auto', 2], ['Cab', 3],
+        ['Auto', 4], ['Cab', 5], ['Bike', 6],
       ],
     },
-    badge: '7 rows',
+    badge: '6 rows',
   },
   {
-    sql: `SELECT\n  COUNT(*)           AS total_employees,\n  COUNT(DISTINCT department)\n                     AS unique_depts\nFROM employees;`,
+    sql: `SELECT\n  COUNT(*)           AS total_rides,\n  COUNT(DISTINCT vehicle_type)\n                     AS unique_vehicle_types\nFROM rides;`,
     desc: 'COUNT(DISTINCT ...) — count unique values',
-    detail: 'DISTINCT can be used inside aggregate functions. COUNT(DISTINCT department) counts how many unique departments exist, regardless of how many employees are in each.',
+    detail: 'DISTINCT can be used inside aggregate functions. COUNT(DISTINCT vehicle_type) counts how many unique vehicle types exist, regardless of how many rides used each type.',
     result: {
-      columns: ['total_employees', 'unique_depts'],
-      rows: [[8, 4]],
+      columns: ['total_rides', 'unique_vehicle_types'],
+      rows: [[8, 3]],
     },
     badge: '1 row',
   },
@@ -90,9 +88,9 @@ export function DistinctPage() {
           <CodeBlock code={current.sql} />
         </MacWindow>
 
-        <MacWindow title="employees — source" compact>
+        <MacWindow title="rides — source" compact>
           <div className="p-3">
-            <SqlTable table={employees} visibleColumns={[1, 2, 5]} />
+            <SqlTable table={rides} visibleColumns={[4, 7, 1]} />
           </div>
         </MacWindow>
       </div>
@@ -113,8 +111,8 @@ export function DistinctPage() {
 
       <div className="mt-8 pt-6 border-t border-border">
         <QueryPlayground
-          initialQuery="SELECT DISTINCT department FROM employees ORDER BY department;"
-          description="Try DISTINCT on different columns — city from customers, product from orders. Also try COUNT(DISTINCT ...) inside an aggregate."
+          initialQuery="SELECT DISTINCT vehicle_type FROM rides ORDER BY vehicle_type;"
+          description="Try DISTINCT on different columns — vehicle_type, origin_city from users. Also try COUNT(DISTINCT ...) inside an aggregate."
         />
       </div>
     </div>

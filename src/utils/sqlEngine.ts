@@ -100,6 +100,43 @@ INSERT INTO measurements VALUES (2, 'Temp-B', 18.1234, 3.2);
 INSERT INTO measurements VALUES (3, 'Pressure', 101.325, -0.8);
 INSERT INTO measurements VALUES (4, 'Humidity', 67.891, 12.0);
 INSERT INTO measurements VALUES (5, 'Temp-C', 42.5678, -7.3);
+
+CREATE TABLE IF NOT EXISTS users (
+  user_id INTEGER PRIMARY KEY,
+  first_name TEXT,
+  last_name TEXT,
+  email TEXT,
+  signup_date TEXT,
+  origin_city TEXT
+);
+INSERT INTO users VALUES (1, 'Aarav', 'Shah', 'aarav.shah@rapido.in', '2022-01-15', 'Mumbai');
+INSERT INTO users VALUES (2, 'Priya', 'Mehta', 'priya.mehta@gmail.com', '2022-03-20', 'Delhi');
+INSERT INTO users VALUES (3, 'Ravi', 'Kumar', 'ravi.kumar@gmail.com', '2022-05-10', 'Bangalore');
+INSERT INTO users VALUES (4, 'Sneha', 'Patel', 'sneha.patel@yahoo.in', '2022-07-08', 'Ahmedabad');
+INSERT INTO users VALUES (5, 'Arjun', 'Nair', 'arjun.nair@gmail.com', '2023-01-12', 'Kochi');
+INSERT INTO users VALUES (6, 'Divya', 'Iyer', 'divya.iyer@rapido.in', '2023-03-25', 'Chennai');
+INSERT INTO users VALUES (7, 'Karan', 'Singh', 'karan.singh@yahoo.in', '2023-06-18', 'Delhi');
+INSERT INTO users VALUES (8, 'Meera', 'Joshi', 'meera.joshi@gmail.com', '2023-09-05', 'Mumbai');
+
+CREATE TABLE IF NOT EXISTS rides (
+  ride_id INTEGER PRIMARY KEY,
+  user_id INTEGER,
+  start_time TEXT,
+  end_time TEXT,
+  start_location TEXT,
+  end_location TEXT,
+  distance_km REAL,
+  vehicle_type TEXT,
+  captain_rating REAL
+);
+INSERT INTO rides VALUES (101, 1, '2024-01-10 08:30', '2024-01-10 08:52', 'Andheri', 'Bandra', 8.5, 'Bike', 4.8);
+INSERT INTO rides VALUES (102, 2, '2024-01-10 09:00', '2024-01-10 09:35', 'CP', 'Lajpat Nagar', 12.3, 'Auto', 4.5);
+INSERT INTO rides VALUES (103, 3, '2024-01-11 10:15', '2024-01-11 10:45', 'Indiranagar', 'Whitefield', 15.7, 'Cab', 4.9);
+INSERT INTO rides VALUES (104, 1, '2024-01-12 18:00', '2024-01-12 18:20', 'Bandra', 'Andheri', 7.2, 'Bike', 4.7);
+INSERT INTO rides VALUES (105, 4, '2024-01-13 07:45', '2024-01-13 08:10', 'Navrangpura', 'Vastrapur', 6.8, 'Auto', 4.6);
+INSERT INTO rides VALUES (106, 5, '2024-01-14 11:30', '2024-01-14 12:00', 'MG Road', 'Fort Kochi', 9.1, 'Cab', 4.4);
+INSERT INTO rides VALUES (107, 2, '2024-01-15 17:00', '2024-01-15 17:30', 'Karol Bagh', 'Dwarka', 18.4, 'Auto', 4.2);
+INSERT INTO rides VALUES (108, 6, '2024-01-16 09:00', '2024-01-16 09:25', 'Anna Nagar', 'T Nagar', 11.2, 'Bike', NULL);
 `;
 
 async function getDb(): Promise<any> {
@@ -146,7 +183,7 @@ export async function runQuery(sql: string): Promise<ExecResult> {
 }
 
 export function getAvailableTables(): string[] {
-  return ['employees', 'departments', 'orders', 'customers', 'user_events', 'contacts', 'measurements'];
+  return ['users', 'rides', 'employees', 'departments', 'orders', 'customers', 'user_events', 'contacts', 'measurements'];
 }
 
 export interface ExecutionStep {

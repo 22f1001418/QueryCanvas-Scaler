@@ -2,11 +2,16 @@
 
 ## Class 02
 
-| Topic          | URL                                                                        | Status   |
-|----------------|----------------------------------------------------------------------------|----------|
-| SELECT         | `https://querycanvas-scaler-55oa.onrender.com/q/8f3a2b9c4d5e6f1a`         | existing |
-| ORDER BY       | `https://querycanvas-scaler-55oa.onrender.com/q/1a3b5c7d9e0f2a4b`         | existing |
-| LIMIT & OFFSET | `https://querycanvas-scaler-55oa.onrender.com/q/e4a1b7c9d2f50638`         | new      |
+| Topic                        | URL                                                                        | Status   |
+|------------------------------|----------------------------------------------------------------------------|----------|
+| SELECT Statement             | `https://querycanvas-scaler-55oa.onrender.com/q/8f3a2b9c4d5e6f1a`         | existing |
+| ORDER BY                     | `https://querycanvas-scaler-55oa.onrender.com/q/1a3b5c7d9e0f2a4b`         | existing |
+| LIMIT & OFFSET               | `https://querycanvas-scaler-55oa.onrender.com/q/e4a1b7c9d2f50638`         | existing |
+| Quiz 2                       | —                                                                          | quiz     |
+| Inline Calculation           | `https://querycanvas-scaler-55oa.onrender.com/q/9c3f7b1e5a8d2046`         | new      |
+| Alias (AS)                   | `https://querycanvas-scaler-55oa.onrender.com/q/b2f6a9e3c1d80475`         | existing |
+| ROUND() function             | `https://querycanvas-scaler-55oa.onrender.com/q/c5a8e1b4f7d03629`         | existing |
+| CONCAT, UPPER, LOWER         | `https://querycanvas-scaler-55oa.onrender.com/q/b1e4a7c0d3f68925`         | existing |
 
 ## Class 03
 

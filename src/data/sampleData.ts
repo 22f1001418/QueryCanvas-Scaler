@@ -21,6 +21,36 @@ export const employees: TableData = {
   ],
 };
 
+export const users: TableData = {
+  name: 'users',
+  columns: ['user_id', 'first_name', 'last_name', 'email', 'signup_date', 'origin_city'],
+  rows: [
+    [1, 'Aarav', 'Shah', 'aarav.shah@rapido.in', '2022-01-15', 'Mumbai'],
+    [2, 'Priya', 'Mehta', 'priya.mehta@gmail.com', '2022-03-20', 'Delhi'],
+    [3, 'Ravi', 'Kumar', 'ravi.kumar@gmail.com', '2022-05-10', 'Bangalore'],
+    [4, 'Sneha', 'Patel', 'sneha.patel@yahoo.in', '2022-07-08', 'Ahmedabad'],
+    [5, 'Arjun', 'Nair', 'arjun.nair@gmail.com', '2023-01-12', 'Kochi'],
+    [6, 'Divya', 'Iyer', 'divya.iyer@rapido.in', '2023-03-25', 'Chennai'],
+    [7, 'Karan', 'Singh', 'karan.singh@yahoo.in', '2023-06-18', 'Delhi'],
+    [8, 'Meera', 'Joshi', 'meera.joshi@gmail.com', '2023-09-05', 'Mumbai'],
+  ],
+};
+
+export const rides: TableData = {
+  name: 'rides',
+  columns: ['ride_id', 'user_id', 'start_time', 'end_time', 'start_location', 'end_location', 'distance_km', 'vehicle_type', 'captain_rating'],
+  rows: [
+    [101, 1, '2024-01-10 08:30', '2024-01-10 08:52', 'Andheri', 'Bandra', 8.5, 'Bike', 4.8],
+    [102, 2, '2024-01-10 09:00', '2024-01-10 09:35', 'CP', 'Lajpat Nagar', 12.3, 'Auto', 4.5],
+    [103, 3, '2024-01-11 10:15', '2024-01-11 10:45', 'Indiranagar', 'Whitefield', 15.7, 'Cab', 4.9],
+    [104, 1, '2024-01-12 18:00', '2024-01-12 18:20', 'Bandra', 'Andheri', 7.2, 'Bike', 4.7],
+    [105, 4, '2024-01-13 07:45', '2024-01-13 08:10', 'Navrangpura', 'Vastrapur', 6.8, 'Auto', 4.6],
+    [106, 5, '2024-01-14 11:30', '2024-01-14 12:00', 'MG Road', 'Fort Kochi', 9.1, 'Cab', 4.4],
+    [107, 2, '2024-01-15 17:00', '2024-01-15 17:30', 'Karol Bagh', 'Dwarka', 18.4, 'Auto', 4.2],
+    [108, 6, '2024-01-16 09:00', '2024-01-16 09:25', 'Anna Nagar', 'T Nagar', 11.2, 'Bike', null],
+  ],
+};
+
 export const departments: TableData = {
   name: 'departments',
   columns: ['id', 'dept_name', 'location', 'budget'],

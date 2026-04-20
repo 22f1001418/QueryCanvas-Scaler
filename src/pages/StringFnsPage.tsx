@@ -8,79 +8,79 @@ import { useAnimation } from '../hooks/useAnimation';
 import { motion } from 'framer-motion';
 
 const strTable = {
-  name: 'contacts',
-  columns: ['id', 'full_name', 'email', 'city'],
+  name: 'users',
+  columns: ['user_id', 'first_name', 'last_name', 'email', 'origin_city'],
   rows: [
-    [1, 'Alice Smith', 'alice.smith@acme.com', '  New York  '],
-    [2, 'Bob Jones', 'bob.jones@globaltech.co.uk', 'london'],
-    [3, 'Carol White', 'carol@startup.io', 'BERLIN'],
-    [4, 'Dave Brown-Lee', 'dave.brown@mega.store', 'Tokyo'],
-    [5, 'Eve O\'Connor', 'eve@dataflow.paris', 'san francisco'],
+    [1, 'aarav', 'SHAH', 'aarav.shah@rapido.in', 'Mumbai'],
+    [2, 'PRIYA', 'mehta', 'priya.mehta@gmail.com', '  Delhi  '],
+    [3, 'Ravi', 'Kumar', 'ravi.kumar@gmail.com', 'bangalore'],
+    [4, 'SNEHA', 'Patel', 'sneha.patel@yahoo.in', 'AHMEDABAD'],
+    [5, 'arjun', 'NAIR', 'arjun.nair@gmail.com', 'kochi'],
   ] as (string | number | null)[][],
 };
 
 const steps = [
   {
-    sql: `SELECT\n  CONCAT(full_name, ' <', email, '>')\n    AS display\nFROM contacts;`,
+    sql: `SELECT\n  CONCAT(first_name, ' ', last_name)\n    AS full_name\nFROM users;`,
     desc: 'CONCAT — combine strings',
     result: {
-      columns: ['display'],
+      columns: ['full_name'],
       rows: [
-        ['Alice Smith <alice.smith@acme.com>'],
-        ['Bob Jones <bob.jones@globaltech.co.uk>'],
-        ['Carol White <carol@startup.io>'],
-        ['Dave Brown-Lee <dave.brown@mega.store>'],
-        ["Eve O'Connor <eve@dataflow.paris>"],
+        ['aarav SHAH'],
+        ['PRIYA mehta'],
+        ['Ravi Kumar'],
+        ['SNEHA Patel'],
+        ['arjun NAIR'],
       ],
     },
   },
   {
-    sql: `-- Extract domain from email\nSELECT email,\n  SUBSTRING(\n    email,\n    POSITION('@' IN email) + 1\n  ) AS domain\nFROM contacts;`,
+    sql: `-- Extract domain from email\nSELECT email,\n  SUBSTRING(\n    email,\n    POSITION('@' IN email) + 1\n  ) AS domain\nFROM users;`,
     desc: 'SUBSTRING + POSITION — extract domain',
     result: {
       columns: ['email', 'domain'],
       rows: [
-        ['alice.smith@acme.com', 'acme.com'],
-        ['bob.jones@globaltech.co.uk', 'globaltech.co.uk'],
-        ['carol@startup.io', 'startup.io'],
-        ['dave.brown@mega.store', 'mega.store'],
-        ['eve@dataflow.paris', 'dataflow.paris'],
+        ['aarav.shah@rapido.in', 'rapido.in'],
+        ['priya.mehta@gmail.com', 'gmail.com'],
+        ['ravi.kumar@gmail.com', 'gmail.com'],
+        ['sneha.patel@yahoo.in', 'yahoo.in'],
+        ['arjun.nair@gmail.com', 'gmail.com'],
       ],
     },
   },
   {
-    sql: `SELECT\n  LEFT(full_name, 1) AS initial,\n  RIGHT(email, 3) AS tld,\n  LENGTH(full_name) AS name_len\nFROM contacts;`,
+    sql: `SELECT\n  LEFT(first_name, 1) AS initial,\n  RIGHT(email, 2) AS tld,\n  LENGTH(first_name) AS name_len\nFROM users;`,
     desc: 'LEFT, RIGHT, LENGTH',
     result: {
       columns: ['initial', 'tld', 'name_len'],
-      rows: [['A', 'com', 11], ['B', '.uk', 9], ['C', '.io', 11], ['D', 'ore', 14], ['E', 'ris', 12]],
+      rows: [['a', 'in', 5], ['P', 'om', 5], ['R', 'om', 4], ['S', 'in', 5], ['a', 'om', 5]],
     },
   },
   {
-    sql: `SELECT\n  TRIM(city) AS trimmed,\n  UPPER(city) AS upper_city,\n  LOWER(full_name) AS lower_name\nFROM contacts;`,
+    sql: `SELECT\n  TRIM(origin_city) AS trimmed,\n  UPPER(first_name) AS upper_name,\n  LOWER(last_name)  AS lower_last\nFROM users;`,
     desc: 'TRIM, UPPER, LOWER',
     result: {
-      columns: ['trimmed', 'upper_city', 'lower_name'],
+      columns: ['trimmed', 'upper_name', 'lower_last'],
       rows: [
-        ['New York', 'NEW YORK', 'alice smith'],
-        ['london', 'LONDON', 'bob jones'],
-        ['BERLIN', 'BERLIN', 'carol white'],
-        ['Tokyo', 'TOKYO', 'dave brown-lee'],
-        ['san francisco', 'SAN FRANCISCO', "eve o'connor"],
+        ['Mumbai', 'AARAV', 'shah'],
+        ['Delhi', 'PRIYA', 'mehta'],
+        ['bangalore', 'RAVI', 'kumar'],
+        ['AHMEDABAD', 'SNEHA', 'patel'],
+        ['kochi', 'ARJUN', 'nair'],
       ],
     },
   },
   {
-    sql: `SELECT full_name,\n  REPLACE(\n    full_name, ' ', '_'\n  ) AS slug\nFROM contacts;`,
+    sql: `SELECT first_name,\n  REPLACE(\n    email, '@', ' [at] '\n  ) AS safe_email\nFROM users;`,
     desc: 'REPLACE — substitution',
     result: {
-      columns: ['full_name', 'slug'],
+      columns: ['first_name', 'safe_email'],
       rows: [
-        ['Alice Smith', 'Alice_Smith'],
-        ['Bob Jones', 'Bob_Jones'],
-        ['Carol White', 'Carol_White'],
-        ['Dave Brown-Lee', 'Dave_Brown-Lee'],
-        ["Eve O'Connor", "Eve_O'Connor"],
+        ['aarav', 'aarav.shah [at] rapido.in'],
+        ['PRIYA', 'priya.mehta [at] gmail.com'],
+        ['Ravi', 'ravi.kumar [at] gmail.com'],
+        ['SNEHA', 'sneha.patel [at] yahoo.in'],
+        ['arjun', 'arjun.nair [at] gmail.com'],
       ],
     },
   },
@@ -107,7 +107,7 @@ export function StringFnsPage() {
         <MacWindow title="Query" compact>
           <CodeBlock code={current.sql} />
         </MacWindow>
-        <MacWindow title="contacts — source" compact>
+        <MacWindow title="users — source" compact>
           <div className="p-3">
             <SqlTable table={strTable} />
           </div>
@@ -127,7 +127,7 @@ export function StringFnsPage() {
 
       {/* Try it yourself */}
       <QueryPlayground
-        initialQuery="SELECT name, UPPER(name) AS upper_name, LENGTH(name) AS len FROM employees;"
+        initialQuery="SELECT CONCAT(first_name, ' ', last_name) AS full_name, UPPER(origin_city) AS city FROM users;"
       />
 
     </div>

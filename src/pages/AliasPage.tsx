@@ -3,64 +3,76 @@ import { SqlTable } from '../components/SqlTable';
 import { CodeBlock } from '../components/CodeBlock';
 import { AnimationControls } from '../components/AnimationControls';
 import { useAnimation } from '../hooks/useAnimation';
-import { employees } from '../data/sampleData';
+import { rides } from '../data/sampleData';
 import { QueryPlayground } from '../components/QueryPlayground';
 import { motion } from 'framer-motion';
 
 const steps = [
   {
-    sql: `SELECT name AS employee_name,\n       salary AS annual_pay\nFROM employees;`,
+    sql: `SELECT start_location AS pickup,\n       end_location AS dropoff\nFROM rides;`,
     desc: 'Column alias — rename output columns',
-    detail: 'AS renames a column in the result set. "name AS employee_name" makes the output header read "employee_name" instead of "name". The original table is unchanged.',
+    detail: 'AS renames a column in the result set. "start_location AS pickup" makes the output header read "pickup" instead of "start_location". The original table is unchanged.',
     result: {
-      columns: ['employee_name', 'annual_pay'],
+      columns: ['pickup', 'dropoff'],
       rows: [
-        ['Alice', 95000], ['Bob', 88000], ['Carol', 72000], ['Dave', 68000],
-        ['Eve', 78000], ['Frank', 65000], ['Grace', 102000], ['Hank', 71000],
+        ['Andheri', 'Bandra'],
+        ['CP', 'Lajpat Nagar'],
+        ['Indiranagar', 'Whitefield'],
+        ['Bandra', 'Andheri'],
+        ['Navrangpura', 'Vastrapur'],
+        ['MG Road', 'Fort Kochi'],
+        ['Karol Bagh', 'Dwarka'],
+        ['Anna Nagar', 'T Nagar'],
       ],
     },
   },
   {
-    sql: `SELECT name,\n       salary * 1.1 AS salary_with_raise\nFROM employees;`,
+    sql: `SELECT start_location,\n       distance_km * 15 AS fare_estimate\nFROM rides;`,
     desc: 'Expression alias — name a computed value',
-    detail: 'Aliases are essential for computed columns. Without AS, the column header would show the raw expression "salary * 1.1". With AS, you give it a readable name.',
+    detail: 'Aliases are essential for computed columns. Without AS, the column header would show the raw expression "distance_km * 15". With AS, you give it a readable name.',
     result: {
-      columns: ['name', 'salary_with_raise'],
+      columns: ['start_location', 'fare_estimate'],
       rows: [
-        ['Alice', 104500], ['Bob', 96800], ['Carol', 79200], ['Dave', 74800],
-        ['Eve', 85800], ['Frank', 71500], ['Grace', 112200], ['Hank', 78100],
+        ['Andheri', 127.5],
+        ['CP', 184.5],
+        ['Indiranagar', 235.5],
+        ['Bandra', 108.0],
+        ['Navrangpura', 102.0],
+        ['MG Road', 136.5],
+        ['Karol Bagh', 276.0],
+        ['Anna Nagar', 168.0],
       ],
     },
   },
   {
-    sql: `SELECT e.name,\n       e.department,\n       e.salary\nFROM employees AS e\nWHERE e.salary > 80000;`,
+    sql: `SELECT r.start_location,\n       r.vehicle_type,\n       r.distance_km\nFROM rides AS r\nWHERE r.distance_km > 10;`,
     desc: 'Table alias — shorten table references',
-    detail: 'Tables can also be aliased. "employees AS e" lets you write "e.column" instead of "employees.column". Table aliases become critical with JOINs where you reference multiple tables.',
+    detail: 'Tables can also be aliased. "rides AS r" lets you write "r.column" instead of "rides.column". Table aliases become critical with JOINs where you reference multiple tables.',
     result: {
-      columns: ['name', 'department', 'salary'],
+      columns: ['start_location', 'vehicle_type', 'distance_km'],
       rows: [
-        ['Alice', 'Engineering', 95000],
-        ['Bob', 'Engineering', 88000],
-        ['Eve', 'Sales', 78000],
-        ['Grace', 'Engineering', 102000],
+        ['CP', 'Auto', 12.3],
+        ['Indiranagar', 'Cab', 15.7],
+        ['Karol Bagh', 'Auto', 18.4],
+        ['Anna Nagar', 'Bike', 11.2],
       ],
     },
   },
   {
-    sql: `SELECT name,\n       salary,\n       salary - 70000 AS above_base\nFROM employees\nORDER BY above_base DESC;`,
+    sql: `SELECT start_location,\n       distance_km,\n       distance_km - 8 AS above_base\nFROM rides\nORDER BY above_base DESC;`,
     desc: 'Alias in ORDER BY',
     detail: 'You can reference a column alias in ORDER BY (but not in WHERE — that runs before SELECT). Here "above_base" is used to sort, making the query much easier to read than repeating the expression.',
     result: {
-      columns: ['name', 'salary', 'above_base'],
+      columns: ['start_location', 'distance_km', 'above_base'],
       rows: [
-        ['Grace', 102000, 32000],
-        ['Alice', 95000, 25000],
-        ['Bob', 88000, 18000],
-        ['Eve', 78000, 8000],
-        ['Carol', 72000, 2000],
-        ['Hank', 71000, 1000],
-        ['Dave', 68000, -2000],
-        ['Frank', 65000, -5000],
+        ['Karol Bagh', 18.4, 10.4],
+        ['Indiranagar', 15.7, 7.7],
+        ['CP', 12.3, 4.3],
+        ['Anna Nagar', 11.2, 3.2],
+        ['MG Road', 9.1, 1.1],
+        ['Andheri', 8.5, 0.5],
+        ['Bandra', 7.2, -0.8],
+        ['Navrangpura', 6.8, -1.2],
       ],
     },
   },
@@ -97,9 +109,9 @@ export function AliasPage() {
           <CodeBlock code={current.sql} />
         </MacWindow>
 
-        <MacWindow title="employees — source" compact>
+        <MacWindow title="rides — source" compact>
           <div className="p-3">
-            <SqlTable table={employees} visibleColumns={[1, 3]} />
+            <SqlTable table={rides} visibleColumns={[4, 6]} />
           </div>
         </MacWindow>
       </div>
@@ -117,7 +129,7 @@ export function AliasPage() {
 
       <div className="mt-8 pt-6 border-t border-border">
         <QueryPlayground
-          initialQuery="SELECT name AS employee, department AS dept, salary * 1.1 AS new_salary FROM employees;"
+          initialQuery="SELECT start_location AS pickup, end_location AS dropoff, distance_km * 15 AS fare_estimate FROM rides;"
           description="Practice using AS. Try renaming columns, aliasing computed expressions, and using a table alias in the FROM clause."
         />
       </div>

@@ -3,64 +3,60 @@ import { SqlTable } from '../components/SqlTable';
 import { CodeBlock } from '../components/CodeBlock';
 import { AnimationControls } from '../components/AnimationControls';
 import { useAnimation } from '../hooks/useAnimation';
-import { employees } from '../data/sampleData';
+import { rides } from '../data/sampleData';
 import { QueryPlayground } from '../components/QueryPlayground';
 import { motion } from 'framer-motion';
 
 const steps = [
   {
-    sql: `-- Each row is a separate employee\nSELECT department, name\nFROM employees\nORDER BY department;`,
-    desc: 'The problem — one row per employee',
-    detail: 'A plain SELECT returns one row per employee. If you want to see all names in a department on a single line — e.g. for a report or API response — you need GROUP_CONCAT.',
+    sql: `-- Each row is a separate ride\nSELECT vehicle_type, start_location\nFROM rides\nORDER BY vehicle_type;`,
+    desc: 'The problem — one row per ride',
+    detail: 'A plain SELECT returns one row per ride. If you want to see all pickup points for a vehicle type on a single line — e.g. for a report or API response — you need GROUP_CONCAT.',
     result: {
-      columns: ['department', 'name'],
+      columns: ['vehicle_type', 'start_location'],
       rows: [
-        ['Engineering', 'Alice'], ['Engineering', 'Bob'], ['Engineering', 'Grace'],
-        ['HR', 'Hank'],
-        ['Marketing', 'Carol'], ['Marketing', 'Dave'],
-        ['Sales', 'Eve'], ['Sales', 'Frank'],
+        ['Auto', 'CP'], ['Auto', 'Navrangpura'], ['Auto', 'Karol Bagh'],
+        ['Bike', 'Andheri'], ['Bike', 'Bandra'], ['Bike', 'Anna Nagar'],
+        ['Cab', 'Indiranagar'], ['Cab', 'MG Road'],
       ],
     },
   },
   {
-    sql: `SELECT department,\n  GROUP_CONCAT(name) AS members\nFROM employees\nGROUP BY department;`,
+    sql: `SELECT vehicle_type,\n  GROUP_CONCAT(start_location) AS pickup_points\nFROM rides\nGROUP BY vehicle_type;`,
     desc: 'GROUP_CONCAT — collapse rows into a list',
-    detail: 'GROUP_CONCAT aggregates all values in a group into a single comma-separated string. Each department now appears on one row with all its member names joined together.',
+    detail: 'GROUP_CONCAT aggregates all values in a group into a single comma-separated string. Each vehicle type now appears on one row with all its pickup points joined together.',
     result: {
-      columns: ['department', 'members'],
+      columns: ['vehicle_type', 'pickup_points'],
       rows: [
-        ['Engineering', 'Alice,Bob,Grace'],
-        ['HR', 'Hank'],
-        ['Marketing', 'Carol,Dave'],
-        ['Sales', 'Eve,Frank'],
+        ['Auto', 'CP,Navrangpura,Karol Bagh'],
+        ['Bike', 'Andheri,Bandra,Anna Nagar'],
+        ['Cab', 'Indiranagar,MG Road'],
       ],
     },
   },
   {
-    sql: `SELECT department,\n  GROUP_CONCAT(name, ' | ') AS members\nFROM employees\nGROUP BY department;`,
+    sql: `SELECT vehicle_type,\n  GROUP_CONCAT(start_location, ' | ') AS pickup_points\nFROM rides\nGROUP BY vehicle_type;`,
     desc: 'Custom separator',
     detail: 'The second argument to GROUP_CONCAT sets the separator. Here " | " makes the output more readable than the default comma. You can use any string — ", ", " / ", " → ", etc.',
     result: {
-      columns: ['department', 'members'],
+      columns: ['vehicle_type', 'pickup_points'],
       rows: [
-        ['Engineering', 'Alice | Bob | Grace'],
-        ['HR', 'Hank'],
-        ['Marketing', 'Carol | Dave'],
-        ['Sales', 'Eve | Frank'],
+        ['Auto', 'CP | Navrangpura | Karol Bagh'],
+        ['Bike', 'Andheri | Bandra | Anna Nagar'],
+        ['Cab', 'Indiranagar | MG Road'],
       ],
     },
   },
   {
-    sql: `SELECT department,\n  COUNT(*)           AS headcount,\n  GROUP_CONCAT(name, ', ')\n                     AS members\nFROM employees\nGROUP BY department\nORDER BY headcount DESC;`,
-    desc: 'Combined with COUNT — headcount + member list',
-    detail: 'GROUP_CONCAT pairs naturally with other aggregates. Here each row shows the department headcount and the full member list, sorted by team size. This is a common reporting pattern.',
+    sql: `SELECT vehicle_type,\n  COUNT(*)           AS total_rides,\n  GROUP_CONCAT(start_location, ', ')\n                     AS pickup_points\nFROM rides\nGROUP BY vehicle_type\nORDER BY total_rides DESC;`,
+    desc: 'Combined with COUNT — ride count + pickup list',
+    detail: 'GROUP_CONCAT pairs naturally with other aggregates. Here each row shows the vehicle type ride count and the full pickup list, sorted by volume. This is a common reporting pattern.',
     result: {
-      columns: ['department', 'headcount', 'members'],
+      columns: ['vehicle_type', 'total_rides', 'pickup_points'],
       rows: [
-        ['Engineering', 3, 'Alice, Bob, Grace'],
-        ['Marketing', 2, 'Carol, Dave'],
-        ['Sales', 2, 'Eve, Frank'],
-        ['HR', 1, 'Hank'],
+        ['Auto', 3, 'CP, Navrangpura, Karol Bagh'],
+        ['Bike', 3, 'Andheri, Bandra, Anna Nagar'],
+        ['Cab', 2, 'Indiranagar, MG Road'],
       ],
     },
   },
@@ -103,9 +99,9 @@ export function GroupConcatPage() {
           <CodeBlock code={current.sql} />
         </MacWindow>
 
-        <MacWindow title="employees — source" compact>
+        <MacWindow title="rides — source" compact>
           <div className="p-3">
-            <SqlTable table={employees} visibleColumns={[1, 2]} />
+            <SqlTable table={rides} visibleColumns={[7, 4]} />
           </div>
         </MacWindow>
       </div>
@@ -123,8 +119,8 @@ export function GroupConcatPage() {
 
       <div className="mt-8 pt-6 border-t border-border">
         <QueryPlayground
-          initialQuery={`SELECT department,\n  COUNT(*) AS headcount,\n  GROUP_CONCAT(name, ', ') AS members\nFROM employees\nGROUP BY department\nORDER BY headcount DESC;`}
-          description="GROUP_CONCAT is fully supported here. Try it on other tables — GROUP_CONCAT(product, ', ') from orders grouped by customer_id, or GROUP_CONCAT(city) from customers."
+          initialQuery={`SELECT vehicle_type,\n  COUNT(*) AS total_rides,\n  GROUP_CONCAT(start_location, ', ') AS pickup_points\nFROM rides\nGROUP BY vehicle_type\nORDER BY total_rides DESC;`}
+          description="GROUP_CONCAT is fully supported here. Try grouping by origin_city from users, or combine with other aggregates like AVG(distance_km)."
         />
       </div>
     </div>

@@ -7,75 +7,75 @@ import { QueryPlayground } from '../components/QueryPlayground';
 import { motion } from 'framer-motion';
 
 const messyTable = {
-  name: 'contacts',
-  columns: ['id', 'full_name', 'city'],
+  name: 'users',
+  columns: ['user_id', 'first_name', 'origin_city'],
   rows: [
-    [1, 'alice smith', 'new york'],
-    [2, 'BOB JONES', 'LONDON'],
-    [3, 'carol WHITE', 'berlin'],
-    [4, 'DAVE brown-lee', 'tokyo'],
-    [5, 'eve o\'connor', 'san francisco'],
+    [1, 'aarav shah', 'mumbai'],
+    [2, 'PRIYA MEHTA', 'DELHI'],
+    [3, 'ravi KUMAR', 'bangalore'],
+    [4, 'SNEHA patel', 'ahmedabad'],
+    [5, 'arjun nair', 'kochi'],
   ] as (string | number | null)[][],
 };
 
 const steps = [
   {
-    sql: `-- The problem: inconsistent casing\nSELECT full_name, city\nFROM contacts;`,
+    sql: `-- The problem: inconsistent casing\nSELECT first_name, origin_city\nFROM users;`,
     desc: 'The problem — inconsistent casing',
     detail: 'Raw data often has mixed casing — all-lowercase, ALL-CAPS, or random mixtures. Displaying this to users looks unprofessional. We need a way to normalize it.',
     result: {
-      columns: ['full_name', 'city'],
+      columns: ['first_name', 'origin_city'],
       rows: [
-        ['alice smith', 'new york'],
-        ['BOB JONES', 'LONDON'],
-        ['carol WHITE', 'berlin'],
-        ['DAVE brown-lee', 'tokyo'],
-        ["eve o'connor", 'san francisco'],
+        ['aarav shah', 'mumbai'],
+        ['PRIYA MEHTA', 'DELHI'],
+        ['ravi KUMAR', 'bangalore'],
+        ['SNEHA patel', 'ahmedabad'],
+        ['arjun nair', 'kochi'],
       ],
     },
   },
   {
-    sql: `-- PostgreSQL / Oracle\nSELECT INITCAP(full_name) AS name,\n       INITCAP(city)      AS city\nFROM contacts;`,
+    sql: `-- PostgreSQL / Oracle\nSELECT INITCAP(first_name) AS name,\n       INITCAP(origin_city) AS city\nFROM users;`,
     desc: 'INITCAP — capitalise first letter of each word',
-    detail: 'INITCAP capitalises the first letter of every word and lowercases the rest. "alice smith" → "Alice Smith", "BOB JONES" → "Bob Jones". Available in PostgreSQL and Oracle.',
+    detail: 'INITCAP capitalises the first letter of every word and lowercases the rest. "aarav shah" → "Aarav Shah", "PRIYA MEHTA" → "Priya Mehta". Available in PostgreSQL and Oracle.',
     result: {
       columns: ['name', 'city'],
       rows: [
-        ['Alice Smith', 'New York'],
-        ['Bob Jones', 'London'],
-        ['Carol White', 'Berlin'],
-        ['Dave Brown-Lee', 'Tokyo'],
-        ["Eve O'Connor", 'San Francisco'],
+        ['Aarav Shah', 'Mumbai'],
+        ['Priya Mehta', 'Delhi'],
+        ['Ravi Kumar', 'Bangalore'],
+        ['Sneha Patel', 'Ahmedabad'],
+        ['Arjun Nair', 'Kochi'],
       ],
     },
   },
   {
-    sql: `-- Compare: UPPER vs LOWER vs INITCAP\nSELECT full_name,\n  UPPER(full_name)   AS upper_case,\n  LOWER(full_name)   AS lower_case,\n  INITCAP(full_name) AS title_case\nFROM contacts;`,
+    sql: `-- Compare: UPPER vs LOWER vs INITCAP\nSELECT first_name,\n  UPPER(first_name)   AS upper_case,\n  LOWER(first_name)   AS lower_case,\n  INITCAP(first_name) AS title_case\nFROM users;`,
     desc: 'UPPER vs LOWER vs INITCAP',
     detail: 'UPPER converts everything to capitals, LOWER converts everything to lowercase, and INITCAP produces "Title Case" — first letter of each word capitalised, rest lowercase.',
     result: {
-      columns: ['full_name', 'upper_case', 'lower_case', 'title_case'],
+      columns: ['first_name', 'upper_case', 'lower_case', 'title_case'],
       rows: [
-        ['alice smith', 'ALICE SMITH', 'alice smith', 'Alice Smith'],
-        ['BOB JONES', 'BOB JONES', 'bob jones', 'Bob Jones'],
-        ['carol WHITE', 'CAROL WHITE', 'carol white', 'Carol White'],
-        ['DAVE brown-lee', 'DAVE BROWN-LEE', 'dave brown-lee', 'Dave Brown-Lee'],
-        ["eve o'connor", "EVE O'CONNOR", "eve o'connor", "Eve O'Connor"],
+        ['aarav shah', 'AARAV SHAH', 'aarav shah', 'Aarav Shah'],
+        ['PRIYA MEHTA', 'PRIYA MEHTA', 'priya mehta', 'Priya Mehta'],
+        ['ravi KUMAR', 'RAVI KUMAR', 'ravi kumar', 'Ravi Kumar'],
+        ['SNEHA patel', 'SNEHA PATEL', 'sneha patel', 'Sneha Patel'],
+        ['arjun nair', 'ARJUN NAIR', 'arjun nair', 'Arjun Nair'],
       ],
     },
   },
   {
-    sql: `-- SQLite workaround (single-word values)\nSELECT city,\n  UPPER(SUBSTR(city, 1, 1))\n    || LOWER(SUBSTR(city, 2))\n    AS initcap_city\nFROM contacts;`,
+    sql: `-- SQLite workaround (single-word values)\nSELECT origin_city,\n  UPPER(SUBSTR(origin_city, 1, 1))\n    || LOWER(SUBSTR(origin_city, 2))\n    AS initcap_city\nFROM users;`,
     desc: 'SQLite workaround — manual title case',
     detail: 'SQLite has no built-in INITCAP. For single words you can combine UPPER on the first character with LOWER on the rest using SUBSTR. For multi-word strings a UDF (user-defined function) is needed.',
     result: {
-      columns: ['city', 'initcap_city'],
+      columns: ['origin_city', 'initcap_city'],
       rows: [
-        ['new york', 'New york'],
-        ['LONDON', 'London'],
-        ['berlin', 'Berlin'],
-        ['tokyo', 'Tokyo'],
-        ['san francisco', 'San francisco'],
+        ['mumbai', 'Mumbai'],
+        ['DELHI', 'Delhi'],
+        ['bangalore', 'Bangalore'],
+        ['ahmedabad', 'Ahmedabad'],
+        ['kochi', 'Kochi'],
       ],
     },
   },
@@ -118,7 +118,7 @@ export function InitcapPage() {
           <CodeBlock code={current.sql} />
         </MacWindow>
 
-        <MacWindow title="contacts — source" compact>
+        <MacWindow title="users — source" compact>
           <div className="p-3">
             <SqlTable table={messyTable} />
           </div>
@@ -138,7 +138,7 @@ export function InitcapPage() {
 
       <div className="mt-8 pt-6 border-t border-border">
         <QueryPlayground
-          initialQuery={`-- SQLite workaround: capitalise first letter of each city\nSELECT city,\n  UPPER(SUBSTR(city, 1, 1)) || LOWER(SUBSTR(city, 2)) AS initcap_city\nFROM customers;`}
+          initialQuery={`-- SQLite workaround: capitalise first letter of each city\nSELECT origin_city,\n  UPPER(SUBSTR(origin_city, 1, 1)) || LOWER(SUBSTR(origin_city, 2)) AS initcap_city\nFROM users;`}
           description="INITCAP is PostgreSQL-only. In this SQLite playground, try the SUBSTR workaround above. For full multi-word title-casing in SQLite you would write a custom function."
         />
       </div>
