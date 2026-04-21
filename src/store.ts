@@ -3,7 +3,7 @@ export type PageId =
   | 'nullhandling' | 'countvariants'
   | 'wherehaving'
   | 'iffunction' | 'advancedcase'
-  | 'inlinecalc'
+  | 'inlinecalc' | 'nullvsblank'
   | 'groupby' | 'joins' | 'subqueries'
   | 'window' | 'case' | 'cte'
   | 'aggregations' | 'sets'

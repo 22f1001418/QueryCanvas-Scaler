@@ -16,6 +16,7 @@ import { WhereVsHavingPage } from './pages/WhereVsHavingPage';
 import { IFunctionPage } from './pages/IFunctionPage';
 import { AdvancedCaseAggPage } from './pages/AdvancedCaseAggPage';
 import { InlineCalcPage } from './pages/InlineCalcPage';
+import { NullVsBlankPage } from './pages/NullVsBlankPage';
 import { AggregationsPage } from './pages/AggregationsPage';
 import { GroupByPage } from './pages/GroupByPage';
 import { JoinsPage } from './pages/JoinsPage';
@@ -81,6 +82,7 @@ const topicRoutes: { path: string; Component: React.ComponentType }[] = [
   { path: ROUTES.iffunction, Component: IFunctionPage },
   { path: ROUTES.advancedcase, Component: AdvancedCaseAggPage },
   { path: ROUTES.inlinecalc, Component: InlineCalcPage },
+  { path: ROUTES.nullvsblank, Component: NullVsBlankPage },
   { path: ROUTES.aggregations, Component: AggregationsPage },
   { path: ROUTES.groupby, Component: GroupByPage },
   { path: ROUTES.joins, Component: JoinsPage },
