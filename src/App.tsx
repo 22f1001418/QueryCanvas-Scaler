@@ -33,6 +33,7 @@ import { ViewsPage } from './pages/ViewsPage';
 import { IndexingPage } from './pages/IndexingPage';
 import { AcidModelingPage } from './pages/AcidModelingPage';
 import { AnalyticsPage } from './pages/AnalyticsPage';
+import { RecursiveCTEPage } from './pages/RecursiveCTEPage';
 
 function TopicLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -99,6 +100,7 @@ const topicRoutes: { path: string; Component: React.ComponentType }[] = [
   { path: ROUTES.indexing, Component: IndexingPage },
   { path: ROUTES.acid, Component: AcidModelingPage },
   { path: ROUTES.analytics, Component: AnalyticsPage },
+  { path: ROUTES.recursivecte, Component: RecursiveCTEPage },
 ];
 
 export default function App() {

@@ -40,6 +40,7 @@ const TOKENS: Record<PageId, string> = {
   indexing:      'e3b6f9a2c5d81047',
   acid:          'f2a5d8c1b4e70369',
   analytics:     '0b4e7a1d5c8f2936',
+  recursivecte:  '1b8e4f2a7d5c9036',
 };
 
 export const ROUTES = {
@@ -75,6 +76,7 @@ export const ROUTES = {
   indexing:      `/q/${TOKENS.indexing}`,
   acid:          `/q/${TOKENS.acid}`,
   analytics:     `/q/${TOKENS.analytics}`,
+  recursivecte:  `/q/${TOKENS.recursivecte}`,
 } as const satisfies Record<'landing' | PageId, string>;
 
 export type RouteKey = keyof typeof ROUTES;
