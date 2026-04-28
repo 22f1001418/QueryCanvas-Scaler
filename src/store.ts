@@ -4,6 +4,8 @@ export type PageId =
   | 'wherehaving'
   | 'iffunction' | 'advancedcase'
   | 'inlinecalc' | 'nullvsblank'
+  | 'noncorrelated' | 'correlated' | 'innotinanyall' | 'existsquery'
+  | 'nestedsubqueries' | 'ctesadv' | 'unionall'
   | 'groupby' | 'joins' | 'subqueries'
   | 'window' | 'case' | 'cte'
   | 'aggregations' | 'sets'

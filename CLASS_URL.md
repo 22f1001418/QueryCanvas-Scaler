@@ -46,3 +46,20 @@
 | CASE Statement                     | `https://querycanvas-scaler-55oa.onrender.com/q/3e7a1c5f9d2b8046`         | existing |
 | IF() Function                      | `https://querycanvas-scaler-55oa.onrender.com/q/7b3e9f1c5a2d8046`         | new      |
 | Advanced Aggregation with CASE WHEN| `https://querycanvas-scaler-55oa.onrender.com/q/4d8a2f6e1b9c3057`         | new      |
+
+## Class 07
+
+| Topic                        | URL                                                                        | Status   |
+|------------------------------|----------------------------------------------------------------------------|----------|
+| Non-Correlated Subqueries    | `https://querycanvas-scaler-55oa.onrender.com/q/5a8e2f1b9c3d7046`         | new      |
+| Correlated Subqueries        | `https://querycanvas-scaler-55oa.onrender.com/q/6b9f3c2a1e8d5047`         | new      |
+| IN, NOT IN, ANY, ALL         | `https://querycanvas-scaler-55oa.onrender.com/q/7c1a5e4f9b2d8036`         | new      |
+| EXISTS                       | `https://querycanvas-scaler-55oa.onrender.com/q/8d2b6f3a5c9e1047`         | new      |
+
+## Class 08
+
+| Topic                        | URL                                                                        | Status   |
+|------------------------------|----------------------------------------------------------------------------|----------|
+| Nested Subqueries            | `https://querycanvas-scaler-55oa.onrender.com/q/9e3c7a5b1f4d8260`         | new      |
+| CTEs & their Advantages      | `https://querycanvas-scaler-55oa.onrender.com/q/a4f8c2e6b9d31507`         | new      |
+| UNION / UNION ALL            | `https://querycanvas-scaler-55oa.onrender.com/q/b5d9a3f7c1e84026`         | new      |

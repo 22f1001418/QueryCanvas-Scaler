@@ -17,6 +17,13 @@ import { IFunctionPage } from './pages/IFunctionPage';
 import { AdvancedCaseAggPage } from './pages/AdvancedCaseAggPage';
 import { InlineCalcPage } from './pages/InlineCalcPage';
 import { NullVsBlankPage } from './pages/NullVsBlankPage';
+import { NonCorrelatedPage } from './pages/NonCorrelatedPage';
+import { CorrelatedPage } from './pages/CorrelatedPage';
+import { InNotInAnyAllPage } from './pages/InNotInAnyAllPage';
+import { ExistsPage } from './pages/ExistsPage';
+import { NestedSubqueriesPage } from './pages/NestedSubqueriesPage';
+import { CtesAdvantagesPage } from './pages/CtesAdvantagesPage';
+import { UnionPage } from './pages/UnionPage';
 import { AggregationsPage } from './pages/AggregationsPage';
 import { GroupByPage } from './pages/GroupByPage';
 import { JoinsPage } from './pages/JoinsPage';
@@ -83,6 +90,13 @@ const topicRoutes: { path: string; Component: React.ComponentType }[] = [
   { path: ROUTES.advancedcase, Component: AdvancedCaseAggPage },
   { path: ROUTES.inlinecalc, Component: InlineCalcPage },
   { path: ROUTES.nullvsblank, Component: NullVsBlankPage },
+  { path: ROUTES.noncorrelated, Component: NonCorrelatedPage },
+  { path: ROUTES.correlated, Component: CorrelatedPage },
+  { path: ROUTES.innotinanyall, Component: InNotInAnyAllPage },
+  { path: ROUTES.existsquery, Component: ExistsPage },
+  { path: ROUTES.nestedsubqueries, Component: NestedSubqueriesPage },
+  { path: ROUTES.ctesadv, Component: CtesAdvantagesPage },
+  { path: ROUTES.unionall, Component: UnionPage },
   { path: ROUTES.aggregations, Component: AggregationsPage },
   { path: ROUTES.groupby, Component: GroupByPage },
   { path: ROUTES.joins, Component: JoinsPage },
