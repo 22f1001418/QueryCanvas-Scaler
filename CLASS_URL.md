@@ -63,3 +63,15 @@
 | Nested Subqueries            | `https://querycanvas-scaler-55oa.onrender.com/q/9e3c7a5b1f4d8260`         | new      |
 | CTEs & their Advantages      | `https://querycanvas-scaler-55oa.onrender.com/q/a4f8c2e6b9d31507`         | new      |
 | UNION / UNION ALL            | `https://querycanvas-scaler-55oa.onrender.com/q/b5d9a3f7c1e84026`         | new      |
+
+## Class 10
+
+| Topic              | URL                                                                        | Status   |
+|--------------------|----------------------------------------------------------------------------|----------|
+| Types of Joins     | `https://querycanvas-scaler-55oa.onrender.com/q/0e8b3a5d7c2f1649`         | existing |
+| INNER JOIN         | `https://querycanvas-scaler-55oa.onrender.com/q/c6e0a4f8b2d31957`         | new      |
+| LEFT JOIN          | `https://querycanvas-scaler-55oa.onrender.com/q/d7f1b5a9c3e84068`         | new      |
+| RIGHT JOIN         | `https://querycanvas-scaler-55oa.onrender.com/q/e8a2c6b0d4f95179`         | new      |
+| FULL OUTER JOIN    | `https://querycanvas-scaler-55oa.onrender.com/q/f9b3d7c1e5a06280`         | new      |
+| UNION DISTINCT     | `https://querycanvas-scaler-55oa.onrender.com/q/b5d9a3f7c1e84026`         | existing |
+| UNION ALL          | `https://querycanvas-scaler-55oa.onrender.com/q/b5d9a3f7c1e84026`         | existing |

@@ -24,6 +24,10 @@ import { ExistsPage } from './pages/ExistsPage';
 import { NestedSubqueriesPage } from './pages/NestedSubqueriesPage';
 import { CtesAdvantagesPage } from './pages/CtesAdvantagesPage';
 import { UnionPage } from './pages/UnionPage';
+import { InnerJoinPage } from './pages/InnerJoinPage';
+import { LeftJoinPage } from './pages/LeftJoinPage';
+import { RightJoinPage } from './pages/RightJoinPage';
+import { FullOuterJoinPage } from './pages/FullOuterJoinPage';
 import { AggregationsPage } from './pages/AggregationsPage';
 import { GroupByPage } from './pages/GroupByPage';
 import { JoinsPage } from './pages/JoinsPage';
@@ -97,6 +101,10 @@ const topicRoutes: { path: string; Component: React.ComponentType }[] = [
   { path: ROUTES.nestedsubqueries, Component: NestedSubqueriesPage },
   { path: ROUTES.ctesadv, Component: CtesAdvantagesPage },
   { path: ROUTES.unionall, Component: UnionPage },
+  { path: ROUTES.innerjoin, Component: InnerJoinPage },
+  { path: ROUTES.leftjoin, Component: LeftJoinPage },
+  { path: ROUTES.rightjoin, Component: RightJoinPage },
+  { path: ROUTES.fullouterjoin, Component: FullOuterJoinPage },
   { path: ROUTES.aggregations, Component: AggregationsPage },
   { path: ROUTES.groupby, Component: GroupByPage },
   { path: ROUTES.joins, Component: JoinsPage },

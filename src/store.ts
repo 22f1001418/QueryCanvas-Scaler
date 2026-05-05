@@ -6,6 +6,7 @@ export type PageId =
   | 'inlinecalc' | 'nullvsblank'
   | 'noncorrelated' | 'correlated' | 'innotinanyall' | 'existsquery'
   | 'nestedsubqueries' | 'ctesadv' | 'unionall'
+  | 'innerjoin' | 'leftjoin' | 'rightjoin' | 'fullouterjoin'
   | 'groupby' | 'joins' | 'subqueries'
   | 'window' | 'case' | 'cte'
   | 'aggregations' | 'sets'
