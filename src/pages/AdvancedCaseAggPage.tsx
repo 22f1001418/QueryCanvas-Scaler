@@ -59,8 +59,8 @@ const steps = [
       columns: ['band', 'headcount', 'avg_salary', 'min_salary', 'max_salary'],
       rows: [
         ['Senior', 2, 98500, 95000, 102000],
-        ['Mid', 4, 72500, 68000, 78000],
-        ['Junior', 2, 67000, 65000, 71000],
+        ['Mid', 4, 77250, 71000, 88000],
+        ['Junior', 2, 66500, 65000, 68000],
       ],
     },
   },

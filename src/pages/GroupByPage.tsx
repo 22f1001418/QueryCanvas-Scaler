@@ -46,10 +46,10 @@ const groupSteps = [
   {
     sql: `SELECT department, COUNT(*) AS cnt\nFROM employees\nWHERE salary > 70000\nGROUP BY department\nHAVING COUNT(*) >= 2;`,
     desc: 'WHERE + GROUP BY + HAVING',
-    detail: 'First, WHERE filters rows (salary > 70k), then GROUP BY groups by department, then HAVING filters groups (count >= 2).',
+    detail: 'First, WHERE filters rows (salary > 70k): Dave(68k) and Frank(65k) are removed. Then GROUP BY groups the 6 remaining rows by department. Finally HAVING keeps only groups with count ≥ 2 — only Engineering (Alice, Bob, Grace) qualifies.',
     result: {
       columns: ['department', 'cnt'],
-      rows: [['Engineering', 3], ['Sales', 2]],
+      rows: [['Engineering', 3]],
     },
   },
 ];

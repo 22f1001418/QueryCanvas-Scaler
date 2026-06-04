@@ -63,13 +63,13 @@ const steps = [
   {
     sql: `-- WHERE and HAVING work together\nSELECT department,\n       COUNT(*)    AS cnt,\n       AVG(salary) AS avg_sal\nFROM employees\nWHERE salary > 68000       -- row filter\nGROUP BY department\nHAVING COUNT(*) >= 2;      -- group filter`,
     desc: 'WHERE + HAVING together — execution order',
-    detail: 'Both can appear in the same query. Execution order: (1) WHERE removes rows with salary ≤ 68k (Dave 68k excluded, Frank 65k excluded). (2) GROUP BY groups the rest. (3) HAVING keeps only groups with ≥ 2 members. HR (Hank alone) is removed.',
+    detail: 'Both can appear in the same query. Execution order: (1) WHERE removes rows with salary ≤ 68k (Dave 68k excluded since 68k is not > 68k, Frank 65k excluded). (2) GROUP BY groups the 6 remaining rows. (3) HAVING keeps only groups with ≥ 2 members — Marketing (Carol alone), Sales (Eve alone), and HR (Hank alone) are all removed. Only Engineering survives.',
     phase: 'both' as const,
     keptRows: [0, 1, 2, 4, 6, 7],   // Alice, Bob, Carol, Eve, Grace, Hank
     removedRows: [3, 5],              // Dave, Frank
     result: {
       columns: ['department', 'cnt', 'avg_sal'],
-      rows: [['Engineering', 3, 95000], ['Marketing', 1, 72000], ['Sales', 1, 78000]],
+      rows: [['Engineering', 3, 95000]],
     },
   },
 ];

@@ -39,12 +39,11 @@ const steps = [
   {
     sql: `-- Find rides ABOVE the user's own average\nSELECT r1.start_location,\n       r1.user_id,\n       r1.distance_km\nFROM rides r1\nWHERE r1.distance_km > (\n  SELECT AVG(r2.distance_km)\n  FROM rides r2\n  WHERE r2.user_id = r1.user_id\n);`,
     desc: 'Correlated — rides above user\'s own average',
-    detail: "Each ride is compared to that specific user's average distance. User 1's average is 7.85 km — Andheri (8.5) is above, Bandra (7.2) is not. User 2's average is 15.35 — only Karol Bagh (18.4) passes. The inner query re-runs with each user_id.",
-    resultRows: [0, 1, 6],
+    detail: "Each ride is compared to that specific user's average distance. User 1's average is 7.85 km — Andheri (8.5) is above, Bandra (7.2) is not. User 2's average is 15.35 — only Karol Bagh (18.4) passes. Users 3–6 each have only one ride, so their ride equals their average and is not strictly above it — no rows for them.",
+    resultRows: [0, 6],
     resultCols: ['start_location', 'user_id', 'distance_km'],
     resultData: [
       ['Andheri', 1, 8.5],
-      ['Indiranagar', 3, 15.7],
       ['Karol Bagh', 2, 18.4],
     ],
   },
