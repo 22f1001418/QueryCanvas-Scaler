@@ -12,4 +12,5 @@ export type PageId =
   | 'aggregations' | 'sets'
   | 'datacleaning' | 'stringfns' | 'numericfns' | 'datefns'
   | 'views' | 'indexing' | 'acid'
-  | 'analytics';
+  | 'analytics'
+  | 'recursivecte';
